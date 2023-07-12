@@ -1,0 +1,108 @@
+from datetime import datetime
+import numpy as np
+
+lista_asientos = [i for i in range(1,101)]
+lista_asientos_comprados = []
+cant=0
+ganancia_total=0
+
+def compra_entradas():
+  while True:
+    try:
+      cant=int(input("Ingrese la cantidad de entradas a comprar: "))
+      if cant<1 or cant>3:
+        print("La compra de entradas debe ser entre 1 y 3.")
+      else:
+        return(cant)
+
+    except ValueError:
+      print("¡¡ERROR!!")
+
+def asignar_asiento(a):
+  while a!=0:
+    try:
+      print(lista_asientos)
+      asiento=int(input("Escoja el asiento: "))
+
+      if asiento in lista_asientos:
+        a-=1
+        rut=int(input("Ingrese el rut del asiento: "))
+        lista_x=[asiento,rut]
+        lista_asientos_comprados.append(lista_x)
+        lista_asientos.pop(asiento-1)
+        lista_asientos.insert(asiento-1,"x")
+      elif asiento not in lista_asientos:
+          print("Asiento no disponible.")
+    except ValueError:
+      print("¡¡ERROR!!")
+
+  return(lista_asientos_comprados, lista_asientos)
+
+
+def ganancias_totales():
+  Platinium=0
+  Gold=0
+  Silver=0
+  total=0
+
+  for i in lista_asientos_comprados:
+    a=i[0]
+    if a in range(1,21):
+      Platinium+=120000
+    elif a in range(21,51):
+      Gold+=80000
+    elif a in range(51,101):
+      Silver+=50000
+      
+
+  total=total+Platinium+Gold+Silver
+
+
+  print(f"Las ganancias totales son {total}")
+
+def menu():
+  print("|---- BIENVENIDO A CREATIVOS ----|")
+  print("|                                |")
+  print("|  1. Comprar entradas           |")
+  print("|                                |")
+  print("|  2. Mostrar ubicaciones        |")
+  print("|                                |")
+  print("|  3. Ver listado de asistentes  |")
+  print("|                                |")
+  print("|  4. Mostrar ganancias totales  |")
+  print("|                                |")
+  print("|  5. Salir                      |")
+  print("|                                |")
+  print("|-------------- o ---------------|")
+
+
+while True:
+  try:
+    menu()
+    opcion=int(input("ingrese una opcion: "))
+
+    if opcion==1:
+      asignar_asiento(compra_entradas())
+
+    elif opcion==2:
+      print(lista_asientos)
+
+    elif opcion==3:
+      for r in range(1,101):
+        for i in lista_asientos_comprados:
+          if i[0] == r:
+            print(i[1])
+
+    elif opcion==4:
+      ganancias_totales()
+
+    elif opcion==5:
+      break
+
+  except ValueError:
+    print("¡¡ERROR!!")
+
+fecha = datetime.now().date()
+
+print("Adios, Vuelva pronto \nfecha:",fecha)
+print("Version 1.2.08")
